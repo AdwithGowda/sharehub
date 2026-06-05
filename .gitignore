@@ -1,0 +1,24 @@
+# Environments
+.venv/
+backend/venv/
+venv/
+env/
+ENV/
+
+# Sensitive files
+backend/.env
+
+# Django files
+*.pyc
+__pycache__/
+backend/__pycache__/
+*/__pycache__/
+backend/media/
+db.sqlite3
+backend/db.sqlite3
+
+# Frontend (Ignore since we only want backend)
+frontend/
+
+# VS Code settings
+.vscode/
