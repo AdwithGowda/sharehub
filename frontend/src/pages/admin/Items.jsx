@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { adminService } from '../../services/adminService';
 import Loader from '../../components/common/Loader';
 import { formatINR } from '../../utils/formatCurrency';
+import { getImageUrl } from '../../utils/imageUrl';
 
 export default function Items() {
   const [items, setItems] = useState([]);
@@ -181,9 +182,18 @@ export default function Items() {
               {items.map((item) => (
                 <tr key={item.id} className="hover:bg-slate-50/50 transition">
                   <td className="px-6 py-4">
-                    <div>
-                      <p className="font-bold text-slate-900">{item.title}</p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">📍 {item.location}</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-slate-100 rounded-lg overflow-hidden shrink-0 border border-slate-100 shadow-xs">
+                        <img 
+                          src={getImageUrl(item.images?.[0]?.image) || 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&q=80'} 
+                          alt={item.title} 
+                          className="w-full h-full object-cover" 
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-slate-900">{item.title}</p>
+                        <p className="text-[10px] text-slate-400 mt-0.5">📍 {item.location}</p>
+                      </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-slate-500">
