@@ -192,7 +192,7 @@ export default function AdminLayout() {
         <aside className={classNames(
           'rounded-3xl border border-slate-200/60 bg-white shadow-md h-fit transition-all duration-300 ease-in-out',
           'fixed top-20 bottom-4 left-4 z-50 w-64 overflow-y-auto max-h-[calc(100vh-6rem)]', // mobile positioning
-          'lg:static lg:block lg:w-auto lg:max-h-none lg:z-0 lg:overflow-visible lg:shadow-xs', // desktop overrides
+          'lg:sticky lg:top-20 lg:block lg:w-auto lg:max-h-[calc(100vh-6rem)] lg:z-0 lg:overflow-y-auto lg:shadow-xs', // desktop overrides
           mobileOpen ? 'translate-x-0 opacity-100' : '-translate-x-80 opacity-0 pointer-events-none lg:translate-x-0 lg:opacity-100 lg:pointer-events-auto'
         )}>
           <div className="border-b border-slate-100 px-5 py-4 bg-slate-50/50">
