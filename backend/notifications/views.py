@@ -91,3 +91,33 @@ class AdminBroadcastNotificationView(APIView):
         Notification.objects.bulk_create(notifications)
 
         return Response({"message": f"Broadcast successfully sent to {customers.count()} users!"}, status=status.HTTP_201_CREATED)
+
+
+class MarkAllNotificationsReadView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    # Flag all unread notifications for current user as read
+    def patch(self, request):
+        unread_notifications = Notification.objects.filter(user=request.user, is_read=False)
+        
+        # Get distinct title and message pairs before marking as read for deletion logic
+        pairs = list(unread_notifications.values('title', 'message').distinct())
+        
+        # Mark all as read
+        unread_count = unread_notifications.update(is_read=True)
+        
+        # Start background deletion timer for each pair if eligible
+        delay = getattr(settings, 'NOTIFICATION_DELETE_DELAY', 300.0)
+        for pair in pairs:
+            title = pair['title']
+            message = pair['message']
+            matching = Notification.objects.filter(title=title, message=message)
+            if not matching.filter(is_read=False).exists():
+                threading.Timer(
+                    delay,
+                    delete_notifications_if_all_read,
+                    args=[title, message]
+                ).start()
+
+        return Response({"message": f"Successfully marked {unread_count} notifications as read."})
+

@@ -204,3 +204,8 @@ STORAGES = {
 CLOUDINARY_CLOUD_NAME = 'diob8h03y'
 CLOUDINARY_API_KEY = '588596462628128'
 CLOUDINARY_API_SECRET = 'LNqGVmR1sH1lBdYNKUJn8O102ng'
+
+# Razorpay Configuration settings for payment verification
+RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', '')
+RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET', '')
+

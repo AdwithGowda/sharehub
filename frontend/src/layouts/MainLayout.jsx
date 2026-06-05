@@ -26,6 +26,12 @@ export default function MainLayout() {
     }
 
     loadNotifications();
+
+    const interval = setInterval(() => {
+      loadNotifications();
+    }, 15000); // Poll every 15 seconds
+
+    return () => clearInterval(interval);
   }, [isAuthenticated, isAdmin]);
 
   useEffect(() => {
@@ -58,13 +64,34 @@ export default function MainLayout() {
   const handleNotificationClick = async (notification) => {
     if (notification.is_read) return;
 
+    // Optimistically update the state
+    setNotifications((current) => current.map((item) => (
+      item.id === notification.id ? { ...item, is_read: true } : item
+    )));
+
     try {
       await notificationService.markAsRead(notification.id);
-      setNotifications((current) => current.map((item) => (
-        item.id === notification.id ? { ...item, is_read: true } : item
-      )));
     } catch (err) {
       console.error('Failed marking notification read:', err);
+      // Revert if request fails
+      setNotifications((current) => current.map((item) => (
+        item.id === notification.id ? { ...item, is_read: false } : item
+      )));
+    }
+  };
+
+  const handleMarkAllAsRead = async () => {
+    const previousNotifications = notifications;
+    
+    // Optimistically mark all as read
+    setNotifications((current) => current.map((item) => ({ ...item, is_read: true })));
+
+    try {
+      await notificationService.markAllAsRead();
+    } catch (err) {
+      console.error('Failed marking all notifications read:', err);
+      // Revert if request fails
+      setNotifications(previousNotifications);
     }
   };
 
@@ -134,7 +161,14 @@ export default function MainLayout() {
                       <div className="absolute right-0 top-12 z-50 w-[calc(100vw-2rem)] sm:w-80 max-w-sm overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-200">
                         <div className="border-b border-slate-100 p-4 bg-slate-50/50 flex justify-between items-center">
                           <p className="text-xs font-black text-slate-800">Alerts</p>
-                          {unreadCount > 0 && <span className="text-[10px] bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full">{unreadCount} unread</span>}
+                          {unreadCount > 0 && (
+                            <button
+                              onClick={handleMarkAllAsRead}
+                              className="text-[10px] text-blue-600 hover:text-blue-800 font-black hover:underline cursor-pointer select-none transition-colors"
+                            >
+                              Mark all as read
+                            </button>
+                          )}
                         </div>
                         {notifications.length === 0 ? (
                           <div className="p-6 text-center text-xs font-semibold text-slate-400">No notifications yet.</div>
@@ -344,7 +378,14 @@ export default function MainLayout() {
                   <div className="absolute right-4 sm:right-0 top-14 sm:top-12 z-50 w-[calc(100vw-2rem)] sm:w-72 max-w-[320px] overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="border-b border-slate-100 p-4 bg-slate-50/50 flex justify-between items-center">
                       <p className="text-xs font-black text-slate-800">Alerts</p>
-                      {unreadCount > 0 && <span className="text-[10px] bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full">{unreadCount} unread</span>}
+                      {unreadCount > 0 && (
+                        <button
+                          onClick={handleMarkAllAsRead}
+                          className="text-[10px] text-blue-600 hover:text-blue-800 font-black hover:underline cursor-pointer select-none transition-colors"
+                        >
+                          Mark all as read
+                        </button>
+                      )}
                     </div>
                     {notifications.length === 0 ? (
                       <div className="p-6 text-center text-xs font-semibold text-slate-400">No notifications yet.</div>

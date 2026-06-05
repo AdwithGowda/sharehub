@@ -9,5 +9,10 @@ export const notificationService = {
   markAsRead: async (id) => {
     const response = await API.patch(`notifications/${id}/read/`);
     return response.data;
+  },
+
+  markAllAsRead: async () => {
+    const response = await API.patch('notifications/read-all/');
+    return response.data;
   }
 };

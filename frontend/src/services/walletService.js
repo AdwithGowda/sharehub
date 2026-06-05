@@ -13,13 +13,39 @@ export const walletService = {
     return response.data;
   },
 
+  // Create a Razorpay Order for wallet topup
+  createTopupOrder: async (amount) => {
+    const response = await API.post('wallet/create-topup-order/', { amount });
+    return response.data;
+  },
+
+  // Verify wallet topup payment signature
+  verifyTopupPayment: async (payload) => {
+    const response = await API.post('wallet/test-topup/', payload);
+    return response.data;
+  },
+
+  // Create a Razorpay Order for a rental booking
+  createRazorpayOrder: async (bookingId) => {
+    const response = await API.post('payments/create-order/', { booking: bookingId });
+    return response.data;
+  },
+
   // Verify and record a successful rental booking order settlement payment entry
-  processBookingPayment: async (bookingId, paymentId) => {
-    const response = await API.post('payments/process/', {
-      booking: bookingId,
-      payment_id: paymentId,
-      payment_method: 'UPI/CARD_DIGITAL'
-    });
+  processBookingPayment: async (bookingIdOrPayload, paymentId = null, orderId = null, signature = null) => {
+    let payload = {};
+    if (typeof bookingIdOrPayload === 'object' && bookingIdOrPayload !== null) {
+      payload = bookingIdOrPayload;
+    } else {
+      payload = {
+        booking: bookingIdOrPayload,
+        razorpay_payment_id: paymentId,
+        razorpay_order_id: orderId,
+        razorpay_signature: signature,
+        payment_method: 'UPI/CARD_DIGITAL'
+      };
+    }
+    const response = await API.post('payments/process/', payload);
     return response.data;
   },
 

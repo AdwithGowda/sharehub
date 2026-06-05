@@ -4,6 +4,20 @@ import { formatINR } from '../../utils/formatCurrency';
 import Loader from '../../components/common/Loader';
 import Button from '../../components/common/Button';
 
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
 export default function Wallet() {
   const [wallet, setWallet] = useState(null);
   const [withdrawals, setWithdrawals] = useState([]);
@@ -41,12 +55,74 @@ export default function Wallet() {
     
     try {
       setTopupLoading(true);
-      await walletService.simulateTestTopup(topupAmount);
-      setTopupAmount('');
-      loadWalletState(); // Refresh dashboard data live
+
+      const order = await walletService.createTopupOrder(topupAmount);
+
+      if (order.is_mock) {
+        const simulatedPaymentToken = `pay_rzp_mock_${Math.random().toString(36).substring(2, 11)}`;
+        await walletService.verifyTopupPayment({
+          amount: topupAmount,
+          razorpay_payment_id: simulatedPaymentToken,
+          razorpay_order_id: order.id,
+          razorpay_signature: 'mock_signature'
+        });
+        setTopupAmount('');
+        loadWalletState();
+        setTopupLoading(false);
+        return;
+      }
+
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        alert("Failed to load Razorpay SDK. Check network connection.");
+        setTopupLoading(false);
+        return;
+      }
+
+      const options = {
+        key: order.key_id,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'ShareHub Platform',
+        description: `Topup Wallet Balance - ₹${topupAmount}`,
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            setTopupLoading(true);
+            await walletService.verifyTopupPayment({
+              amount: topupAmount,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature
+            });
+            setTopupAmount('');
+            loadWalletState();
+          } catch (err) {
+            alert(err.response?.data?.error || 'Verification of topup payment failed.');
+          } finally {
+            setTopupLoading(false);
+          }
+        },
+        prefill: {
+          name: '',
+          email: '',
+          contact: ''
+        },
+        theme: {
+          color: '#2563eb'
+        },
+        modal: {
+          ondismiss: function () {
+            setTopupLoading(false);
+          }
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
     } catch (err) {
-      alert("Error adding sandbox token funds.");
-    } finally {
+      alert(err.response?.data?.error || "Error initiating topup order.");
       setTopupLoading(false);
     }
   };
