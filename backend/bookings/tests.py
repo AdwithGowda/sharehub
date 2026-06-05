@@ -98,3 +98,16 @@ class BookingHandoverTestCase(TestCase):
         # Test serializer
         serializer = ReturnEvidenceSerializer(evidence)
         self.assertEqual(serializer.data['image'], 'https://res.cloudinary.com/fake/return.jpg')
+
+    def test_booking_creation_fails_if_renter_not_verified(self):
+        non_verified_renter = User.objects.create_user(username='non_verified', email='non_verified@example.com', password='password', is_verified=False)
+        self.client.force_authenticate(user=non_verified_renter)
+        
+        url = reverse('booking_list_create')
+        response = self.client.post(url, {
+            'item': self.item.id,
+            'start_date': '2026-06-05',
+            'end_date': '2026-06-10'
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("You must complete identity verification (KYC)", response.data['error'])

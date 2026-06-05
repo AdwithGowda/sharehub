@@ -50,6 +50,12 @@ class BookingListCreateView(APIView):
         if item.owner == request.user:
             return Response({"error": "You cannot rent your own listed asset."}, status=status.HTTP_400_BAD_REQUEST)
 
+        if not request.user.is_verified:
+            return Response(
+                {"error": "You must complete identity verification (KYC) before renting or booking assets."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         if request.user.role == 'ADMIN' or request.user.is_staff or request.user.is_superuser:
             return Response({"error": "Administrators cannot book items for rent."}, status=status.HTTP_400_BAD_REQUEST)
 

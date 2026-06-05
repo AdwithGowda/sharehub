@@ -93,6 +93,19 @@ export default function ItemDetails() {
       setError('You cannot rent your own listed asset.');
       return;
     }
+
+    if (user && !user.is_verified) {
+      setError(
+        <span>
+          You must complete identity verification (KYC) before renting or booking assets. Please upload your documents in the{' '}
+          <Link to="/dashboard/kyc" className="underline text-blue-600 font-bold hover:text-blue-800 transition-colors">
+            Trust Verification
+          </Link>{' '}
+          page.
+        </span>
+      );
+      return;
+    }
     
     setError('');
     setSuccessMsg('');
