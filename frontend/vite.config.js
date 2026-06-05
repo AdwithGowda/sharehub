@@ -22,7 +22,7 @@ try {
   console.error('Failed to read backend .env', e)
 }
 
-const backendUrl = useExternalDb 
+const backendUrl = (useExternalDb || process.env.RENDER === 'true')
   ? 'https://sharehub-c57o.onrender.com' 
   : 'http://127.0.0.1:8000'
 
