@@ -142,8 +142,8 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-slate-50/50">
       {/* Premium Admin Header */}
-      <div className="bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-xs sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="bg-white/70 backdrop-blur-md border border-slate-200/60 rounded-3xl shadow-sm sticky top-20 z-40 mb-6">
+        <div className="px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               type="button"
