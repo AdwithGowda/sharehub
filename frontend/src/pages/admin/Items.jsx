@@ -161,8 +161,12 @@ export default function Items() {
             No equipment listed on the platform yet.
           </div>
         ) : (
-          <div className="overflow-x-auto w-full">
-            <table className="w-full text-left border-collapse text-xs font-semibold">
+          <>
+            <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+              <span>Scroll table horizontally ➔</span>
+            </div>
+            <div className="overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse text-xs font-semibold">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 uppercase tracking-wider text-[10px]">
                 <th className="px-6 py-4">Item Details</th>
@@ -208,6 +212,7 @@ export default function Items() {
             </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
     </div>

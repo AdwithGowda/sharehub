@@ -179,7 +179,7 @@ export default function AdminLayout() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-6 relative">
         {/* Mobile Sidebar Overlay Backdrop */}
         {mobileOpen && (
           <div 
@@ -221,7 +221,7 @@ export default function AdminLayout() {
           </div>
         </aside>
 
-        <main className="space-y-6">
+        <main className="space-y-6 min-w-0 w-full">
           <div className="rounded-3xl border border-slate-200/60 bg-white p-6 shadow-sm">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>

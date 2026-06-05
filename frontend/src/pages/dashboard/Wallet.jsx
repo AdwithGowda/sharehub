@@ -152,40 +152,45 @@ export default function Wallet() {
             No entries logged inside this active ledger timeline frame.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="bg-slate-50/70 text-slate-400 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
-                  <th className="p-4 pl-6">Reference ID</th>
-                  <th className="p-4">Action Type</th>
-                  <th className="p-4">Settlement Delta</th>
-                  <th className="p-4">Execution Status</th>
-                  <th className="p-4 pr-6 text-right">Timestamp</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50 font-medium text-slate-700 text-xs">
-                {wallet.transactions.map((tx) => (
-                  <tr key={tx.id} className="hover:bg-slate-50/40 transition-colors">
-                    <td className="p-4 pl-6 font-mono text-slate-400">#TX-{tx.id}</td>
-                    <td className="p-4">
-                      <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md ${
-                        tx.transaction_type === 'CREDIT' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
-                      }`}>
-                        {tx.transaction_type}
-                      </span>
-                    </td>
-                    <td className={`p-4 font-bold text-sm ${tx.transaction_type === 'CREDIT' ? 'text-emerald-600' : 'text-slate-900'}`}>
-                      {tx.transaction_type === 'CREDIT' ? '+' : '-'}{formatINR(tx.amount)}
-                    </td>
-                    <td className="p-4 text-slate-400">{tx.status}</td>
-                    <td className="p-4 pr-6 text-right text-slate-400 font-normal">
-                      {new Date(tx.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </td>
+          <>
+            <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+              <span>Scroll table horizontally ➔</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="bg-slate-50/70 text-slate-400 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
+                    <th className="p-4 pl-6">Reference ID</th>
+                    <th className="p-4">Action Type</th>
+                    <th className="p-4">Settlement Delta</th>
+                    <th className="p-4">Execution Status</th>
+                    <th className="p-4 pr-6 text-right">Timestamp</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-50 font-medium text-slate-700 text-xs">
+                  {wallet.transactions.map((tx) => (
+                    <tr key={tx.id} className="hover:bg-slate-50/40 transition-colors">
+                      <td className="p-4 pl-6 font-mono text-slate-400">#TX-{tx.id}</td>
+                      <td className="p-4">
+                        <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md ${
+                          tx.transaction_type === 'CREDIT' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+                        }`}>
+                          {tx.transaction_type}
+                        </span>
+                      </td>
+                      <td className={`p-4 font-bold text-sm ${tx.transaction_type === 'CREDIT' ? 'text-emerald-600' : 'text-slate-900'}`}>
+                        {tx.transaction_type === 'CREDIT' ? '+' : '-'}{formatINR(tx.amount)}
+                      </td>
+                      <td className="p-4 text-slate-400">{tx.status}</td>
+                      <td className="p-4 pr-6 text-right text-slate-400 font-normal">
+                        {new Date(tx.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
@@ -201,40 +206,45 @@ export default function Wallet() {
             No withdrawal payout history found.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr className="bg-slate-50/70 text-slate-400 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
-                  <th className="p-4 pl-6">Request ID</th>
-                  <th className="p-4">Bank Account</th>
-                  <th className="p-4">Amount</th>
-                  <th className="p-4">Status</th>
-                  <th className="p-4 pr-6 text-right">Requested At</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50 font-medium text-slate-700 text-xs">
-                {withdrawals.map((w) => (
-                  <tr key={w.id} className="hover:bg-slate-50/40 transition-colors">
-                    <td className="p-4 pl-6 font-mono text-slate-400">#WD-{w.id}</td>
-                    <td className="p-4 text-slate-600">{w.bank_account}</td>
-                    <td className="p-4 font-bold text-slate-900">{formatINR(w.amount)}</td>
-                    <td className="p-4">
-                      <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border uppercase ${
-                        w.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
-                        w.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border-amber-100' :
-                        'bg-red-50 text-red-700 border-red-100'
-                      }`}>
-                        {w.status}
-                      </span>
-                    </td>
-                    <td className="p-4 pr-6 text-right text-slate-400 font-normal">
-                      {new Date(w.requested_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </td>
+          <>
+            <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+              <span>Scroll table horizontally ➔</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="bg-slate-50/70 text-slate-400 text-[11px] font-bold uppercase tracking-wider border-b border-slate-100">
+                    <th className="p-4 pl-6">Request ID</th>
+                    <th className="p-4">Bank Account</th>
+                    <th className="p-4">Amount</th>
+                    <th className="p-4">Status</th>
+                    <th className="p-4 pr-6 text-right">Requested At</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-50 font-medium text-slate-700 text-xs">
+                  {withdrawals.map((w) => (
+                    <tr key={w.id} className="hover:bg-slate-50/40 transition-colors">
+                      <td className="p-4 pl-6 font-mono text-slate-400">#WD-{w.id}</td>
+                      <td className="p-4 text-slate-600">{w.bank_account}</td>
+                      <td className="p-4 font-bold text-slate-900">{formatINR(w.amount)}</td>
+                      <td className="p-4">
+                        <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border uppercase ${
+                          w.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                          w.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                          'bg-red-50 text-red-700 border-red-100'
+                        }`}>
+                          {w.status}
+                        </span>
+                      </td>
+                      <td className="p-4 pr-6 text-right text-slate-400 font-normal">
+                        {new Date(w.requested_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

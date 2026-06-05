@@ -99,8 +99,12 @@ export default function Withdrawals() {
             No withdrawal payout logs found.
           </div>
         ) : (
-          <div className="overflow-x-auto w-full">
-            <table className="w-full border-collapse text-left text-xs font-semibold">
+          <>
+            <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+              <span>Scroll table horizontally ➔</span>
+            </div>
+            <div className="overflow-x-auto w-full">
+              <table className="w-full border-collapse text-left text-xs font-semibold">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50 text-[10px] uppercase tracking-wider text-slate-400">
                 <th className="px-5 py-4">Request</th>
@@ -173,6 +177,7 @@ export default function Withdrawals() {
             </tbody>
           </table>
           </div>
+          </>
         )}
       </div>
     </div>

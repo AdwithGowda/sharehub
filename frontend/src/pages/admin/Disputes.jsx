@@ -130,7 +130,14 @@ export default function Disputes() {
 
                 {/* Damage Evidence Photo Strip Row */}
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Asset Visual Damage Proofs</span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Asset Visual Damage Proofs</span>
+                    {claim.evidences && claim.evidences.length > 0 && (
+                      <div className="flex items-center gap-1.5 text-[9px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-md animate-pulse select-none">
+                        <span>Swipe horizontally ➔</span>
+                      </div>
+                    )}
+                  </div>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {claim.evidences?.map((img) => (
                       <div key={img.id} className="w-24 h-24 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden shrink-0">

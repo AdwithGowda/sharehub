@@ -45,6 +45,9 @@ export default function Users() {
       </div>
 
       <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xs">
+        <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+          <span>Scroll table horizontally ➔</span>
+        </div>
         <div className="overflow-x-auto w-full">
           <table className="w-full text-left border-collapse text-xs font-semibold">
           <thead>

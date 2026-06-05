@@ -65,7 +65,11 @@ export default function Bookings() {
             No booking transactions logged in the system.
           </div>
         ) : (
-          <table className="w-full text-left border-collapse text-xs font-semibold">
+          <>
+            <div className="lg:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mt-4 ml-6 animate-pulse select-none">
+              <span>Scroll table horizontally ➔</span>
+            </div>
+            <table className="w-full text-left border-collapse text-xs font-semibold">
             <thead className="sticky top-0 z-10 bg-slate-50 shadow-[inset_0_-1px_0_rgba(241,245,249,1)]">
               <tr className="bg-slate-50 text-slate-400 uppercase tracking-wider text-[10px]">
                 <th className="px-4 py-3">Booking Ref</th>
@@ -115,6 +119,7 @@ export default function Bookings() {
               ))}
             </tbody>
           </table>
+          </>
         )}
       </div>
     </div>

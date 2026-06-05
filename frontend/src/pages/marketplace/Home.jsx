@@ -4,7 +4,8 @@ import ItemCard from '../../components/item/ItemCard';
 import Loader from '../../components/common/Loader';
 import { AuthContext } from '../../context/AuthContext';
 import BannerCarousel from '../../components/common/BannerCarousel';
-import { Search, Grid, Users, User, ShieldCheck, Lock, BadgeCheck, MapPin, ChevronDown } from 'lucide-react';
+import { Search, ShieldCheck, Lock, BadgeCheck, MapPin, ChevronDown } from 'lucide-react';
+
 
 export default function Home() {
   const { isAuthenticated, user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchLocation, setSearchLocation] = useState('');
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('all');
+
 
   useEffect(() => {
     const loadMarketplaceBaseline = async () => {
@@ -66,12 +67,8 @@ export default function Home() {
     }
   };
 
-  const filteredItems = items.filter((item) => {
-    if (!isAuthenticated || activeTab === 'all') return true;
-    if (activeTab === 'others') return Number(item.owner) !== Number(user?.id);
-    if (activeTab === 'mine') return Number(item.owner) === Number(user?.id);
-    return true;
-  });
+  const filteredItems = items;
+
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -153,55 +150,7 @@ export default function Home() {
         </div>
       </div>
  
-      {/* Tab Navigation for User Listings Filter */}
-      {isAuthenticated && (
-        <div className="w-full grid grid-cols-3 bg-slate-100 p-1 rounded-2xl border border-slate-200/40 shadow-2xs">
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('all');
-            }}
-            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
-              activeTab === 'all'
-                ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
-                : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
-            }`}
-          >
-            <Grid className="w-4 h-4 shrink-0 hidden sm:inline-block" />
-            <span className="truncate">All Gear ({items.length})</span>
-          </button>
-          
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('others');
-            }}
-            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
-              activeTab === 'others'
-                ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
-                : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
-            }`}
-          >
-            <Users className="w-4 h-4 shrink-0 hidden sm:inline-block" />
-            <span className="truncate">Other's Gear ({items.filter(item => Number(item.owner) !== Number(user?.id)).length})</span>
-          </button>
- 
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('mine');
-            }}
-            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
-              activeTab === 'mine'
-                ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
-                : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
-            }`}
-          >
-            <User className="w-4 h-4 shrink-0 hidden sm:inline-block" />
-            <span className="truncate">My Listed Gear ({items.filter(item => Number(item.owner) === Number(user?.id)).length})</span>
-          </button>
-        </div>
-      )}
+
 
       {/* 📦 Structural Grid Display Inventory Container Node */}
       {loading ? (

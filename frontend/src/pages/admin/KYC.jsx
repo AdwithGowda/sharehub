@@ -85,22 +85,25 @@ export default function KYC() {
               </div>
 
               {/* Document Image Verification Grid layout */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-1">
+              <div className="sm:hidden flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-lg w-fit mb-2.5 animate-pulse select-none">
+                <span>Swipe files horizontally ➔</span>
+              </div>
+              <div className="flex sm:grid sm:grid-cols-3 gap-4 overflow-x-auto sm:overflow-x-visible pb-2.5 sm:pb-0 snap-x">
+                <div className="space-y-1 snap-start shrink-0 sm:shrink">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Government ID Proof</span>
-                  <div className="aspect-video bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
+                  <div className="w-56 sm:w-full aspect-[4/3] bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
                     <img src={app.id_proof} alt="ID proof file" className="w-full h-full object-cover hover:scale-105 transition duration-200" />
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 snap-start shrink-0 sm:shrink">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Live Member Selfie</span>
-                  <div className="aspect-video bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
+                  <div className="w-56 sm:w-full aspect-[4/3] bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
                     <img src={app.selfie} alt="Selfie match file" className="w-full h-full object-cover hover:scale-105 transition duration-200" />
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 snap-start shrink-0 sm:shrink">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Address Location Proof</span>
-                  <div className="aspect-video bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
+                  <div className="w-56 sm:w-full aspect-[4/3] bg-slate-50 border border-slate-100 rounded-xl overflow-hidden cursor-zoom-in">
                     <img src={app.address_proof} alt="Address proof file" className="w-full h-full object-cover hover:scale-105 transition duration-200" />
                   </div>
                 </div>
