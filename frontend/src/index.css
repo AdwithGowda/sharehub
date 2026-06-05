@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+
+  --color-blue-50: #FFF8F6;
+  --color-blue-100: #FFEAE4;
+  --color-blue-200: #FFD1C7;
+  --color-blue-300: #FFAEA0;
+  --color-blue-400: #FF836B;
+  --color-blue-500: #FF5F40;
+  --color-blue-600: #FF4B2B;
+  --color-blue-700: #E63E20;
+  --color-blue-800: #CC3118;
+  --color-blue-900: #991F0C;
+  
+  --color-indigo-50: #FFF5F6;
+  --color-indigo-100: #FFE5E7;
+  --color-indigo-200: #FFCCD2;
+  --color-indigo-300: #FF99A5;
+  --color-indigo-400: #FF6B7E;
+  --color-indigo-500: #FF4058;
+  --color-indigo-600: #FF2B47;
+  --color-indigo-700: #E61C36;
+  --color-indigo-800: #B30D23;
+  --color-indigo-900: #800414;
+
+  --color-slate-50: #FCFAF6;
+  --color-slate-100: #F4EFEA;
+  --color-slate-200: #E9E2D8;
+  --color-slate-300: #D8CCC0;
+  --color-slate-400: #BFAEA0;
+  --color-slate-500: #9E8B7C;
+  --color-slate-600: #7A695C;
+  --color-slate-700: #594D43;
+  --color-slate-800: #3C332D;
+  --color-slate-900: #251F1B;
+}
+
+@layer base {
+  html {
+    font-size: 18px;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased font-sans;
+  }
+}
+
