@@ -125,8 +125,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
         }
     }
 else:
-    # Use DATABASE_URL if provided (e.g. on Render or local override)
-    if os.environ.get('DATABASE_URL'):
+    # Use DATABASE_URL if explicitly requested locally (USE_EXTERNAL_DB=True) or if running in Render
+    if os.environ.get('DATABASE_URL') and (os.environ.get('USE_EXTERNAL_DB') == 'True' or os.environ.get('RENDER') == 'true'):
         DATABASES = {
             'default': dj_database_url.config(
                 default=os.environ.get('DATABASE_URL')
