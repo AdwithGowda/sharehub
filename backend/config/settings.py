@@ -116,6 +116,7 @@ from dotenv import load_dotenv
 
 # Load env variables from .env if present
 load_dotenv(BASE_DIR / '.env')
+print("DEBUG: DATABASE_URL exists in environment =", 'DATABASE_URL' in os.environ)
 
 if len(sys.argv) > 1 and sys.argv[1] == 'test':
     DATABASES = {
