@@ -101,7 +101,7 @@ export default function Wallets() {
 
       <form onSubmit={handleAdjustment} className="rounded-3xl border border-slate-100 bg-white p-5 shadow-xs">
         <div className="grid gap-3 lg:grid-cols-[1.5fr_0.8fr_0.8fr_auto] lg:items-end">
-          <div>
+          <div className="min-w-0">
             <label className="mb-1.5 block text-xs font-bold uppercase text-slate-500">Wallet</label>
             <select
               value={selectedWalletId}
@@ -141,7 +141,7 @@ export default function Wallets() {
           <button
             type="submit"
             disabled={adjusting || wallets.length === 0}
-            className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full lg:w-auto rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-xs transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer text-center"
           >
             {adjusting ? 'Applying...' : 'Apply'}
           </button>
