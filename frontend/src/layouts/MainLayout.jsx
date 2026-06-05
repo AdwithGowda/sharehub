@@ -112,11 +112,11 @@ export default function MainLayout() {
           
           {/* Logo Brand Anchor */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 active:scale-95 transition-all duration-300">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-              </svg>
-            </div>
+            <img 
+              src="/logo-1.jpeg" 
+              alt="ShareHub Logo" 
+              className="w-10 h-10 object-cover rounded-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 active:scale-95 transition-all duration-300"
+            />
             <span className="text-xl font-extrabold tracking-tight text-slate-800 transition-colors group-hover:text-blue-600">
               Share<span className="text-blue-600 font-black">Hub</span>
             </span>
