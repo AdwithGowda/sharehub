@@ -301,7 +301,7 @@ export default function MainLayout() {
           {/* Navigation Controls (Mobile Toggle Button + Alerts) */}
           <div className="flex md:hidden items-center space-x-2">
             {isAuthenticated && !isAdmin && (
-              <div className="relative" ref={notificationRef}>
+              <div className="static sm:relative" ref={notificationRef}>
                 <button
                   type="button"
                   onClick={() => setShowNotifications((value) => !value)}
@@ -320,7 +320,7 @@ export default function MainLayout() {
                 </button>
 
                 {showNotifications && (
-                  <div className="absolute right-0 top-12 z-50 w-[calc(100vw-2rem)] sm:w-72 max-w-[320px] overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="absolute right-4 sm:right-0 top-14 sm:top-12 z-50 w-[calc(100vw-2rem)] sm:w-72 max-w-[320px] overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="border-b border-slate-100 p-4 bg-slate-50/50 flex justify-between items-center">
                       <p className="text-xs font-black text-slate-800">Alerts</p>
                       {unreadCount > 0 && <span className="text-[10px] bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full">{unreadCount} unread</span>}
