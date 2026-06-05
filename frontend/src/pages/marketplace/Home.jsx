@@ -131,9 +131,8 @@ export default function Home() {
               Apply Search
             </button>
           </form>
-
           {/* Trust Badges */}
-          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-x-6 gap-y-2 text-xs font-bold text-slate-700 px-1">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-2 text-xs font-bold text-slate-700 px-1">
             <div className="flex items-center gap-1.5 hover:text-slate-900 transition-colors cursor-default">
               <ShieldCheck className="w-4.5 h-4.5 text-blue-600" />
               <span>Verified Neighbors</span>
@@ -153,7 +152,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+ 
       {/* Tab Navigation for User Listings Filter */}
       {isAuthenticated && (
         <div className="w-full grid grid-cols-3 bg-slate-100 p-1 rounded-2xl border border-slate-200/40 shadow-2xs">
@@ -162,13 +161,13 @@ export default function Home() {
             onClick={() => {
               setActiveTab('all');
             }}
-            className={`flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
+            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
               activeTab === 'all'
                 ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
                 : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
             }`}
           >
-            <Grid className="w-4 h-4 shrink-0" />
+            <Grid className="w-4 h-4 shrink-0 hidden sm:inline-block" />
             <span className="truncate">All Gear ({items.length})</span>
           </button>
           
@@ -177,28 +176,28 @@ export default function Home() {
             onClick={() => {
               setActiveTab('others');
             }}
-            className={`flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
+            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
               activeTab === 'others'
                 ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
                 : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
             }`}
           >
-            <Users className="w-4 h-4 shrink-0" />
+            <Users className="w-4 h-4 shrink-0 hidden sm:inline-block" />
             <span className="truncate">Other's Gear ({items.filter(item => Number(item.owner) !== Number(user?.id)).length})</span>
           </button>
-
+ 
           <button
             type="button"
             onClick={() => {
               setActiveTab('mine');
             }}
-            className={`flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
+            className={`flex items-center justify-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2.5 text-[10px] sm:text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-250 cursor-pointer active:scale-[0.99] ${
               activeTab === 'mine'
                 ? 'bg-white text-blue-600 shadow-xs border border-slate-200/30'
                 : 'text-slate-500 hover:bg-white/45 hover:text-slate-800 hover:shadow-2xs'
             }`}
           >
-            <User className="w-4 h-4 shrink-0" />
+            <User className="w-4 h-4 shrink-0 hidden sm:inline-block" />
             <span className="truncate">My Listed Gear ({items.filter(item => Number(item.owner) === Number(user?.id)).length})</span>
           </button>
         </div>

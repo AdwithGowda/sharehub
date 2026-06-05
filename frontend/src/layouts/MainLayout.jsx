@@ -10,9 +10,14 @@ export default function MainLayout() {
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const notificationRef = useRef(null);
   const profileRef = useRef(null);
+
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [location]);
 
   useEffect(() => {
     if (!isAuthenticated || isAdmin) {
@@ -90,8 +95,8 @@ export default function MainLayout() {
             </span>
           </Link>
 
-          {/* Navigation & Actions Controls */}
-          <nav className="flex items-center space-x-4">
+          {/* Navigation & Actions Controls (Desktop) */}
+          <nav className="hidden md:flex items-center space-x-4">
             <Link 
               to="/" 
               className={`text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
@@ -292,7 +297,151 @@ export default function MainLayout() {
               </div>
             )}
           </nav>
+
+          {/* Navigation Controls (Mobile Toggle Button + Alerts) */}
+          <div className="flex md:hidden items-center space-x-2">
+            {isAuthenticated && !isAdmin && (
+              <div className="relative" ref={notificationRef}>
+                <button
+                  type="button"
+                  onClick={() => setShowNotifications((value) => !value)}
+                  className={`relative rounded-xl border border-slate-200/80 bg-white p-2 text-slate-500 transition-all duration-200 hover:bg-slate-50 hover:text-slate-800 ${
+                    showNotifications ? 'bg-slate-50 border-slate-300 text-slate-800' : ''
+                  }`}
+                >
+                  <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                  {unreadCount > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-black text-white ring-2 ring-white animate-pulse">
+                      {unreadCount}
+                    </span>
+                  )}
+                </button>
+
+                {showNotifications && (
+                  <div className="absolute right-0 top-12 z-50 w-72 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="border-b border-slate-100 p-4 bg-slate-50/50 flex justify-between items-center">
+                      <p className="text-xs font-black text-slate-800">Alerts</p>
+                      {unreadCount > 0 && <span className="text-[10px] bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full">{unreadCount} unread</span>}
+                    </div>
+                    {notifications.length === 0 ? (
+                      <div className="p-6 text-center text-xs font-semibold text-slate-400">No notifications yet.</div>
+                    ) : (
+                      <div className="max-h-80 divide-y divide-slate-50 overflow-y-auto">
+                        {notifications.map((notification) => (
+                          <button
+                            key={notification.id}
+                            type="button"
+                            onClick={() => handleNotificationClick(notification)}
+                            className={`block w-full p-4 text-left transition hover:bg-slate-50 ${notification.is_read ? 'bg-white' : 'bg-blue-50/30'}`}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <p className="text-xs font-bold text-slate-900">{notification.title}</p>
+                              {!notification.is_read && <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-blue-600" />}
+                            </div>
+                            <p className="mt-1 line-clamp-2 text-[11px] font-medium leading-relaxed text-slate-500">{notification.message}</p>
+                            <p className="mt-2 text-[10px] font-bold text-slate-400">{new Date(notification.created_at).toLocaleString('en-IN')}</p>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setShowMobileMenu((prev) => !prev)}
+              className="inline-flex items-center justify-center p-2 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-800 focus:outline-hidden"
+            >
+              <span className="sr-only">Toggle main menu</span>
+              {showMobileMenu ? (
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Panel Menu */}
+        {showMobileMenu && (
+          <div className="md:hidden border-t border-slate-100 bg-white px-4 pt-2 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+            <Link
+              to="/"
+              className={`block text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 ${
+                isHomeActive 
+                  ? 'text-blue-600 bg-blue-50/70 font-bold' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              Browse Gear
+            </Link>
+
+            {isAuthenticated ? (
+              <div className="space-y-3 pt-2 border-t border-slate-100">
+                <div className="px-4 py-2 flex items-center space-x-3 bg-slate-50/50 rounded-2xl">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-100 to-indigo-100 border border-blue-200/50 flex items-center justify-center overflow-hidden">
+                    {user?.profile_image ? (
+                      <img src={user.profile_image} alt="Profile avatar" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs font-black text-blue-700 uppercase">{user?.username?.substring(0, 2)}</span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-800">@{user?.username}</p>
+                    <p className="text-[10px] text-slate-400 truncate max-w-[170px]">{user?.email}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  {isAdmin ? (
+                    <Link
+                      to="/admin"
+                      className="block px-4 py-2.5 text-xs font-bold text-purple-700 hover:bg-purple-50 rounded-xl"
+                    >
+                      Admin Console
+                    </Link>
+                  ) : (
+                    <>
+                      <Link to="/dashboard" className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl">My Rental Bookings</Link>
+                      <Link to="/dashboard/listings" className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl">My Listing Requests</Link>
+                      <Link to="/dashboard/wallet" className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl">Escrow Wallet</Link>
+                      <Link to="/dashboard/kyc" className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl">Trust Verification</Link>
+                      <Link to="/dashboard/add-item" className="block px-4 py-2.5 text-xs font-bold text-blue-600 hover:bg-blue-50 rounded-xl">List New Gear</Link>
+                    </>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleLogoutClick}
+                  className="w-full flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+                <Link to="/login" className="text-center text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors px-3 py-2.5 border border-slate-200 rounded-xl">
+                  Sign In
+                </Link>
+                <Link to="/register" className="text-center text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 px-5 py-2.5 rounded-xl shadow-md">
+                  Register
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
       </header>
 
       {/* Main Dynamic View Content Container */}

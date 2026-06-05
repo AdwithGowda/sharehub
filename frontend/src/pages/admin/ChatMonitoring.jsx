@@ -120,7 +120,9 @@ export default function ChatMonitoring() {
       <div className="grid gap-6 lg:grid-cols-[360px_1fr] min-h-[600px] max-h-[750px] items-stretch">
         
         {/* Left Pane: Thread Explorer */}
-        <div className="rounded-3xl border border-slate-200/60 bg-white shadow-xs flex flex-col overflow-hidden h-[600px] lg:h-auto">
+        <div className={`rounded-3xl border border-slate-200/60 bg-white shadow-xs flex flex-col overflow-hidden h-[600px] lg:h-auto ${
+          activeBookingId ? 'hidden lg:flex' : 'flex'
+        }`}>
           {/* Search & Filter Header */}
           <div className="p-4 border-b border-slate-100 bg-slate-50/50 space-y-3 shrink-0">
             <div className="relative">
@@ -213,7 +215,9 @@ export default function ChatMonitoring() {
         </div>
 
         {/* Right Pane: Message Viewer */}
-        <div className="rounded-3xl border border-slate-200/60 bg-white shadow-xs flex flex-col overflow-hidden h-[600px] lg:h-auto">
+        <div className={`rounded-3xl border border-slate-200/60 bg-white shadow-xs flex flex-col overflow-hidden h-[600px] lg:h-auto ${
+          activeBookingId ? 'flex' : 'hidden lg:flex'
+        }`}>
           {!activeBookingId ? (
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400 space-y-3">
               <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center text-slate-300">
@@ -230,20 +234,31 @@ export default function ChatMonitoring() {
             <>
               {/* Header Info Banner */}
               <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row justify-between sm:items-center gap-3 shrink-0 animate-fade-in">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-black text-slate-900 text-sm tracking-tight">{activeThread?.item_title}</h3>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-black border uppercase ${
-                      activeThread?.status === 'DISPUTED'
-                        ? 'bg-red-50 text-red-700 border-red-100'
-                        : 'bg-slate-100 text-slate-600 border-slate-200'
-                    }`}>
-                      {activeThread?.status}
-                    </span>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setActiveBookingId(null)}
+                    className="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+                    title="Back to conversations"
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-black text-slate-900 text-sm tracking-tight">{activeThread?.item_title}</h3>
+                      <span className={`px-2 py-0.5 rounded-md text-[9px] font-black border uppercase ${
+                        activeThread?.status === 'DISPUTED'
+                          ? 'bg-red-50 text-red-700 border-red-100'
+                          : 'bg-slate-100 text-slate-600 border-slate-200'
+                      }`}>
+                        {activeThread?.status}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-0.5 font-medium">
+                      Booking ID: #{activeBookingId} • Renter: <span className="font-bold text-slate-700">@{activeThread?.renter_username}</span> • Owner: <span className="font-bold text-slate-700">@{activeThread?.owner_username}</span>
+                    </p>
                   </div>
-                  <p className="text-[10px] text-slate-500 mt-0.5 font-medium">
-                    Booking ID: #{activeBookingId} • Renter: <span className="font-bold text-slate-700">@{activeThread?.renter_username}</span> • Owner: <span className="font-bold text-slate-700">@{activeThread?.owner_username}</span>
-                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   {messagesLoading && (

@@ -179,12 +179,21 @@ export default function AdminLayout() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)] relative">
+        {/* Mobile Sidebar Overlay Backdrop */}
+        {mobileOpen && (
+          <div 
+            className="fixed inset-0 z-40 bg-slate-900/30 backdrop-blur-xs lg:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+
         {/* Sidebar Container */}
         <aside className={classNames(
-          'overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-sm h-fit',
-          mobileOpen ? 'block' : 'hidden',
-          'lg:block'
+          'rounded-3xl border border-slate-200/60 bg-white shadow-md h-fit transition-all duration-300 ease-in-out',
+          'fixed top-20 bottom-4 left-4 z-50 w-64 overflow-y-auto max-h-[calc(100vh-6rem)]', // mobile positioning
+          'lg:static lg:block lg:w-auto lg:max-h-none lg:z-0 lg:overflow-visible lg:shadow-xs', // desktop overrides
+          mobileOpen ? 'translate-x-0 opacity-100' : '-translate-x-80 opacity-0 pointer-events-none lg:translate-x-0 lg:opacity-100 lg:pointer-events-auto'
         )}>
           <div className="border-b border-slate-100 px-5 py-4 bg-slate-50/50">
             <p className="text-[10px] uppercase tracking-wider text-slate-400 font-extrabold">Console Directory</p>

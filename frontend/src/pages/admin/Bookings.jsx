@@ -59,7 +59,7 @@ export default function Bookings() {
         <p className="text-sm text-slate-500 mt-1">Monitor active and pending leases, verify escrow status, and execute administrative order status overrides.</p>
       </div>
 
-      <div className="bg-white border border-slate-100 rounded-3xl shadow-xs max-h-[615px] overflow-y-auto relative">
+      <div className="bg-white border border-slate-100 rounded-3xl shadow-xs max-h-[615px] overflow-auto relative w-full">
         {bookings.length === 0 ? (
           <div className="text-center py-12 font-semibold text-slate-400 text-xs">
             No booking transactions logged in the system.

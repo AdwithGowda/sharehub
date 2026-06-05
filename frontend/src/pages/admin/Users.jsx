@@ -45,7 +45,8 @@ export default function Users() {
       </div>
 
       <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xs">
-        <table className="w-full text-left border-collapse text-xs font-semibold">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-left border-collapse text-xs font-semibold">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 uppercase tracking-wider text-[10px]">
               <th className="px-6 py-4">User Profile</th>
@@ -100,6 +101,7 @@ export default function Users() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

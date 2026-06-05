@@ -154,7 +154,8 @@ export default function Wallets() {
       </form>
 
       <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xs">
-        <table className="w-full border-collapse text-left text-xs font-semibold">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full border-collapse text-left text-xs font-semibold">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50 text-[10px] uppercase tracking-wider text-slate-400">
               <th className="px-5 py-4">User</th>
@@ -194,7 +195,8 @@ export default function Wallets() {
               );
             })}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

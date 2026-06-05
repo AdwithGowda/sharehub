@@ -161,7 +161,8 @@ export default function Items() {
             No equipment listed on the platform yet.
           </div>
         ) : (
-          <table className="w-full text-left border-collapse text-xs font-semibold">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left border-collapse text-xs font-semibold">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 uppercase tracking-wider text-[10px]">
                 <th className="px-6 py-4">Item Details</th>
@@ -205,7 +206,8 @@ export default function Items() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </div>
     </div>

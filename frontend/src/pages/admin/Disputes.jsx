@@ -87,7 +87,7 @@ export default function Disputes() {
               
               {/* Left Column: Proof Gallery Details Block */}
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <h3 className="font-bold text-slate-900 text-base">Dispute Target Asset Reference: #C-{claim.id}</h3>
                     <p className="text-xs text-slate-400 mt-0.5">Raised by Owner: @{claim.owner_username}</p>
