@@ -142,7 +142,7 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-slate-50/50">
       {/* Premium Admin Header */}
-      <header className="bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-xs sticky top-0 z-50">
+      <div className="bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-xs sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
@@ -177,7 +177,7 @@ export default function AdminLayout() {
             </button>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-6 relative">
         {/* Mobile Sidebar Overlay Backdrop */}
@@ -192,7 +192,7 @@ export default function AdminLayout() {
         <aside className={classNames(
           'rounded-3xl border border-slate-200/60 bg-white shadow-md h-fit transition-all duration-300 ease-in-out',
           'fixed top-20 bottom-4 left-4 z-50 w-64 overflow-y-auto max-h-[calc(100vh-6rem)]', // mobile positioning
-          'lg:sticky lg:top-20 lg:block lg:w-auto lg:max-h-[calc(100vh-6rem)] lg:z-0 lg:overflow-y-auto lg:shadow-xs', // desktop overrides
+          'lg:static lg:block lg:w-auto lg:max-h-none lg:z-0 lg:overflow-visible lg:shadow-xs', // desktop overrides
           mobileOpen ? 'translate-x-0 opacity-100' : '-translate-x-80 opacity-0 pointer-events-none lg:translate-x-0 lg:opacity-100 lg:pointer-events-auto'
         )}>
           <div className="border-b border-slate-100 px-5 py-4 bg-slate-50/50">
