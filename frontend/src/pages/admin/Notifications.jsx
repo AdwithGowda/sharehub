@@ -141,8 +141,8 @@ export default function Notifications() {
                       {notification.is_read ? 'Read' : 'Unread'}
                     </span>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-[10px] font-bold text-slate-400">
-                    <span>@{notification.username} - {notification.email}</span>
+                  <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] font-bold text-slate-400">
+                    <span className="truncate">@{notification.username} - {notification.email}</span>
                     <span>{new Date(notification.created_at).toLocaleString('en-IN')}</span>
                   </div>
                 </div>
