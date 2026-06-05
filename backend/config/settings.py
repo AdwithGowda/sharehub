@@ -125,8 +125,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
         }
     }
 else:
-    # Use local PostgreSQL by default unless USE_EXTERNAL_DB is explicitly set to 'True'
-    if os.environ.get('USE_EXTERNAL_DB') == 'True' and os.environ.get('DATABASE_URL'):
+    # Use DATABASE_URL if provided (e.g., on Render or local override)
+    if os.environ.get('DATABASE_URL'):
         DATABASES = {
             'default': dj_database_url.config(
                 default=os.environ.get('DATABASE_URL')
