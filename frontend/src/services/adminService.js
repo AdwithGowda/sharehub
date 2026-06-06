@@ -56,6 +56,11 @@ export const adminService = {
     return response.data;
   },
 
+  deleteCategory: async (id) => {
+    const response = await API.delete(`items/admin/categories/${id}/`);
+    return response.data;
+  },
+
   removeItem: async (id) => {
     const response = await API.delete(`items/admin/items/${id}/`);
     return response.data;

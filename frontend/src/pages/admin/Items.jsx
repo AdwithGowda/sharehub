@@ -12,6 +12,7 @@ export default function Items() {
   const [categoryName, setCategoryName] = useState('');
   const [categoryDescription, setCategoryDescription] = useState('');
   const [creatingCategory, setCreatingCategory] = useState(false);
+  const [deletingCategory, setDeletingCategory] = useState(null);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
@@ -72,6 +73,20 @@ export default function Items() {
       alert("Error removing listed item.");
     } finally {
       setRemovingId(null);
+    }
+  };
+
+  const handleDeleteCategory = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this category?")) return;
+    try {
+      setDeletingCategory(id);
+      await adminService.deleteCategory(id);
+      setCategories((current) => current.filter(c => c.id !== id));
+      setSuccess("Category deleted successfully.");
+    } catch (err) {
+      setError("Error deleting category.");
+    } finally {
+      setDeletingCategory(null);
     }
   };
 
@@ -144,8 +159,20 @@ export default function Items() {
           ) : (
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               {categories.map((category) => (
-                <div key={category.id} className="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                  <p className="text-sm font-bold text-slate-900">{category.name}</p>
+                <div key={category.id} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 relative">
+                  <div className="flex justify-between items-start">
+                    <p className="text-sm font-bold text-slate-900">{category.name}</p>
+                    <button
+                      onClick={() => handleDeleteCategory(category.id)}
+                      disabled={deletingCategory === category.id}
+                      className="text-red-500 hover:text-red-700 disabled:opacity-50 p-1"
+                      title="Delete Category"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
                   <p className="mt-1 line-clamp-2 text-[11px] font-medium text-slate-400">
                     {category.description || 'No description'}
                   </p>

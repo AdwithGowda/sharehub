@@ -138,3 +138,15 @@ class AdminItemRemoveView(APIView):
             return Response({"message": "Listing removed successfully by administrator."}, status=status.HTTP_204_NO_CONTENT)
         except Item.DoesNotExist:
             return Response({"error": "Listing not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class AdminCategoryRemoveView(APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    def delete(self, request, pk):
+        try:
+            category = Category.objects.get(pk=pk)
+            category.delete()
+            return Response({"message": "Category removed successfully by administrator."}, status=status.HTTP_204_NO_CONTENT)
+        except Category.DoesNotExist:
+            return Response({"error": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
+
