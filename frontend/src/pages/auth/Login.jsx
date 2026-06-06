@@ -34,12 +34,21 @@ export default function Login() {
     <div className="min-h-screen bg-transparent flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
         <div className="mb-6">
-          <div className="flex justify-start mb-3.5">
+          <div className="flex justify-between items-center mb-3.5">
             <Link
               to="/"
               className="px-2.5 py-0.5 text-[10px] font-black tracking-wider uppercase text-blue-600 bg-blue-50/80 rounded-md border border-blue-100/50 hover:bg-blue-100/60 active:scale-95 transition-all cursor-pointer inline-block"
             >
               ShareHub Portal
+            </Link>
+            <Link
+              to="/"
+              className="text-[10px] font-bold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors uppercase tracking-wider"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back
             </Link>
           </div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Portal Login</h2>
