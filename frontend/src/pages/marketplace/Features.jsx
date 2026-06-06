@@ -19,54 +19,63 @@ const featuresData = [
     title: "Rent Tools Nearby",
     description: "Find tools available in your neighborhood and rent them quickly from verified users.",
     icon: MapPin,
+    link: "/",
   },
   {
     id: 2,
     title: "List Your Tools for Rent",
     description: "Upload your unused tools, set pricing and availability, and earn extra income.",
     icon: Wrench,
+    link: "/dashboard/add-item",
   },
   {
     id: 3,
     title: "KYC Verification",
     description: "Verify your identity with secure KYC to build trust and ensure safe transactions.",
     icon: ShieldCheck,
+    link: "/dashboard/kyc",
   },
   {
     id: 4,
     title: "Secure Chat Between Users",
     description: "Communicate directly with owners and renters through an in-app chat system.",
     icon: MessageSquare,
+    link: "/dashboard",
   },
   {
     id: 5,
     title: "QR Code Verification",
     description: "Verify pickup and return of tools securely using QR code scanning.",
     icon: QrCode,
+    link: "/dashboard",
   },
   {
     id: 6,
     title: "Wallet Management",
     description: "Track earnings, deposits, refunds, and withdrawals through a secure digital wallet.",
     icon: Wallet,
+    link: "/dashboard/wallet",
   },
   {
     id: 7,
     title: "Seamless Across All Devices",
     description: "Enjoy a seamless experience on mobile, tablet, and desktop devices with a fully responsive interface.",
     icon: Smartphone,
+    link: "/",
   },
   {
     id: 8,
     title: "Centralized Admin Management",
     description: "Admin manages users, KYC requests, bookings, disputes, and platform security efficiently.",
     icon: LayoutDashboard,
+    link: "/",
   },
   {
     id: 9,
     title: "Secure Authentication",
     description: "Protect user accounts with secure login, registration, and authentication mechanisms.",
     icon: Lock,
+    link: "/",
   }
 ];
 
@@ -127,12 +136,12 @@ export default function Features() {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-slate-50 flex items-center text-xs font-bold text-slate-400 group-hover:text-[#FF6B35] transition-colors duration-300">
-                  <span>Explore detail</span>
+                <Link to={feature.link} className="mt-8 pt-4 border-t border-slate-50 flex items-center text-xs font-bold text-slate-400 group-hover:text-[#FF6B35] transition-colors duration-300">
+                  <span>Explore features</span>
                   <svg className="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
-                </div>
+                </Link>
               </div>
             );
           })}
