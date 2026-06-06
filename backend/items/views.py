@@ -4,6 +4,7 @@ from rest_framework import status, permissions
 from django.conf import settings
 import cloudinary
 import cloudinary.uploader
+from django.db.models import ProtectedError
 from .models import Category, Item, ItemImage
 from .serializers import CategorySerializer, ItemSerializer
 
@@ -149,4 +150,6 @@ class AdminCategoryRemoveView(APIView):
             return Response({"message": "Category removed successfully by administrator."}, status=status.HTTP_204_NO_CONTENT)
         except Category.DoesNotExist:
             return Response({"error": "Category not found."}, status=status.HTTP_404_NOT_FOUND)
+        except ProtectedError:
+            return Response({"error": "Cannot delete category because there are items associated with it."}, status=status.HTTP_400_BAD_REQUEST)
 

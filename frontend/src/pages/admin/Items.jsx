@@ -84,7 +84,8 @@ export default function Items() {
       setCategories((current) => current.filter(c => c.id !== id));
       setSuccess("Category deleted successfully.");
     } catch (err) {
-      setError("Error deleting category.");
+      const apiError = err.response?.data?.error;
+      setError(apiError || "Error deleting category.");
     } finally {
       setDeletingCategory(null);
     }
