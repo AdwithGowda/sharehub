@@ -52,13 +52,13 @@ const featuresData = [
   },
   {
     id: 7,
-    title: "Mobile-Friendly Design",
+    title: "Seamless Across All Devices",
     description: "Enjoy a seamless experience on mobile, tablet, and desktop devices with a fully responsive interface.",
     icon: Smartphone,
   },
   {
     id: 8,
-    title: "Powerful Admin Dashboard",
+    title: "Centralized Admin Management",
     description: "Admin manages users, KYC requests, bookings, disputes, and platform security efficiently.",
     icon: LayoutDashboard,
   },
