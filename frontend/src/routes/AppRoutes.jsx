@@ -30,6 +30,7 @@ import AddItem from '../pages/dashboard/AddItem';
 import KYCUpload from '../pages/dashboard/KYCUpload';
 import MyListedGear from '../pages/dashboard/MyListedGear';
 import Profile from '../pages/dashboard/Profile';
+import Features from '../pages/marketplace/Features';
 
 
 export default function AppRoutes() {
@@ -48,6 +49,7 @@ export default function AppRoutes() {
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/features" element={<Features />} />
         <Route path="/item/:id" element={<ItemDetails />} />
 
         <Route element={<ProtectedRoute adminOnly={false} />}>

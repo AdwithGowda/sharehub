@@ -135,6 +135,17 @@ export default function MainLayout() {
               Browse Gear
             </Link>
 
+            <Link 
+              to="/features" 
+              className={`text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-200 ${
+                location.pathname === '/features'
+                  ? 'text-blue-600 bg-blue-50/70' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/50'
+              }`}
+            >
+              Features
+            </Link>
+
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
                 {/* Alerts Popover Panel */}
@@ -444,6 +455,17 @@ export default function MainLayout() {
               }`}
             >
               Browse Gear
+            </Link>
+
+            <Link
+              to="/features"
+              className={`block text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 ${
+                location.pathname === '/features'
+                  ? 'text-blue-600 bg-blue-50/70 font-bold' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              Features
             </Link>
 
             {isAuthenticated ? (
