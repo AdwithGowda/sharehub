@@ -145,7 +145,12 @@ class AdminItemRemoveView(APIView):
     def delete(self, request, pk):
         try:
             item = Item.objects.get(pk=pk)
-            item.delete()
+            try:
+                item.delete()
+            except ProtectedError:
+                # Force delete by removing protected related objects (bookings) first
+                item.bookings.all().delete()
+                item.delete()
             return Response({"message": "Listing removed successfully by administrator."}, status=status.HTTP_204_NO_CONTENT)
         except Item.DoesNotExist:
             return Response({"error": "Listing not found."}, status=status.HTTP_404_NOT_FOUND)
