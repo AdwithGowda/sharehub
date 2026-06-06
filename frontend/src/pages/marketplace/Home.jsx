@@ -4,6 +4,7 @@ import ItemCard from '../../components/item/ItemCard';
 import Loader from '../../components/common/Loader';
 import { AuthContext } from '../../context/AuthContext';
 import BannerCarousel from '../../components/common/BannerCarousel';
+import CategoryScroller from '../../components/common/CategoryScroller';
 import { Search, ShieldCheck, Lock, BadgeCheck, MapPin, ChevronDown } from 'lucide-react';
 
 
@@ -62,6 +63,28 @@ export default function Home() {
       setItems(fetchedItems);
     } catch (err) {
       console.error("Failed resetting filters:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCategoryScrollerClick = async (categoryId) => {
+    // Update the dropdown value to match the clicked category
+    setSelectedCategory(categoryId);
+    
+    // Immediately trigger the search
+    try {
+      setLoading(true);
+      const activeFilters = { category: categoryId };
+      if (searchLocation) activeFilters.location = searchLocation;
+      
+      const filteredResult = await itemService.getActiveItems(activeFilters);
+      setItems(filteredResult);
+      
+      // Scroll to the items section smoothly
+      document.getElementById('marketplace-catalog')?.scrollIntoView({ behavior: 'smooth' });
+    } catch (err) {
+      console.error("Error filtering by clicked category:", err);
     } finally {
       setLoading(false);
     }
@@ -150,8 +173,9 @@ export default function Home() {
         </div>
       </div>
  
-
-
+      {/* Horizontal Category Scroller */}
+      <CategoryScroller categories={categories} onCategoryClick={handleCategoryScrollerClick} />
+      
       {/* 📦 Structural Grid Display Inventory Container Node */}
       {loading ? (
         <Loader />

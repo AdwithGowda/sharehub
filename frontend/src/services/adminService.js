@@ -51,8 +51,15 @@ export const adminService = {
     return response.data;
   },
 
-  createCategory: async (name, description) => {
-    const response = await API.post('items/categories/', { name, description });
+  createCategory: async (name, description, imageFile) => {
+    const formData = new FormData();
+    formData.append('name', name);
+    if (description) formData.append('description', description);
+    if (imageFile) formData.append('image', imageFile);
+
+    const response = await API.post('items/categories/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
     return response.data;
   },
 

@@ -11,6 +11,7 @@ export default function Items() {
   const [removingId, setRemovingId] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const [categoryDescription, setCategoryDescription] = useState('');
+  const [categoryImage, setCategoryImage] = useState(null);
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [deletingCategory, setDeletingCategory] = useState(null);
   const [success, setSuccess] = useState('');
@@ -49,10 +50,11 @@ export default function Items() {
 
     try {
       setCreatingCategory(true);
-      const category = await adminService.createCategory(categoryName.trim(), categoryDescription.trim());
+      const category = await adminService.createCategory(categoryName.trim(), categoryDescription.trim(), categoryImage);
       setCategories((current) => [...current, category].sort((a, b) => a.name.localeCompare(b.name)));
       setCategoryName('');
       setCategoryDescription('');
+      setCategoryImage(null);
       setSuccess(`Category "${category.name}" was added successfully.`);
     } catch (err) {
       const data = err.response?.data;
@@ -136,6 +138,16 @@ export default function Items() {
             />
           </div>
 
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1.5">Category Image (Optional)</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setCategoryImage(e.target.files[0])}
+              className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+            />
+          </div>
+
           <button
             type="submit"
             disabled={creatingCategory}
@@ -161,22 +173,31 @@ export default function Items() {
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               {categories.map((category) => (
                 <div key={category.id} className="rounded-2xl border border-slate-100 bg-slate-50 p-3 relative">
-                  <div className="flex justify-between items-start">
-                    <p className="text-sm font-bold text-slate-900">{category.name}</p>
-                    <button
-                      onClick={() => handleDeleteCategory(category.id)}
-                      disabled={deletingCategory === category.id}
-                      className="text-red-500 hover:text-red-700 disabled:opacity-50 p-1"
-                      title="Delete Category"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
+                  <div className="flex items-start gap-3">
+                    {category.image && (
+                      <div className="w-10 h-10 shrink-0 rounded-lg overflow-hidden border border-slate-200 bg-white shadow-xs">
+                        <img src={getImageUrl(category.image)} alt={category.name} className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <p className="text-sm font-bold text-slate-900">{category.name}</p>
+                        <button
+                          onClick={() => handleDeleteCategory(category.id)}
+                          disabled={deletingCategory === category.id}
+                          className="text-red-500 hover:text-red-700 disabled:opacity-50 p-1 -mt-1 -mr-1"
+                          title="Delete Category"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                      <p className="mt-1 line-clamp-2 text-[11px] font-medium text-slate-400">
+                        {category.description || 'No description'}
+                      </p>
+                    </div>
                   </div>
-                  <p className="mt-1 line-clamp-2 text-[11px] font-medium text-slate-400">
-                    {category.description || 'No description'}
-                  </p>
                 </div>
               ))}
             </div>
