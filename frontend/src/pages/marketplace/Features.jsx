@@ -165,7 +165,7 @@ export default function Features() {
             </p>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                to={isAuthenticated ? "/dashboard" : "/register"}
+                to={isAuthenticated ? "/" : "/register"}
                 className="w-full sm:w-auto px-8 py-4 bg-[#FF6B35] hover:bg-[#E55A27] text-white font-extrabold rounded-2xl shadow-lg shadow-[#FF6B35]/20 hover:shadow-[#FF6B35]/35 transition-all duration-300 hover:scale-102 active:scale-98"
               >
                 Get Started
