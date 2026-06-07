@@ -27,6 +27,7 @@ import Notifications from '../pages/admin/Notifications';
 import Settings from '../pages/admin/Settings';
 import BookingDetails from '../pages/dashboard/BookingDetails';
 import AddItem from '../pages/dashboard/AddItem';
+import EditItem from '../pages/dashboard/EditItem';
 import KYCUpload from '../pages/dashboard/KYCUpload';
 import MyListedGear from '../pages/dashboard/MyListedGear';
 import Profile from '../pages/dashboard/Profile';
@@ -121,6 +122,7 @@ export default function AppRoutes() {
             <Route path="wallet" element={<Wallet />} />
             <Route path="booking/:id" element={<BookingDetails />} />
             <Route path="add-item" element={<AddItem />} />
+            <Route path="edit-item/:id" element={<EditItem />} />
             <Route path="kyc" element={<KYCUpload />} />
             <Route path="profile" element={<Profile />} />
           </Route>

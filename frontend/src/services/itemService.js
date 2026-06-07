@@ -28,6 +28,15 @@ export const itemService = {
     return response.data;
   },
 
+  updateItem: async (id, formData) => {
+    const response = await API.put(`items/${id}/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
   deleteItem: async (id) => {
     const response = await API.delete(`items/${id}/`);
     return response.data;

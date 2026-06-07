@@ -118,7 +118,18 @@ class ItemDetailView(APIView):
         serializer = ItemSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            
+            # If new images are uploaded, replace the old ones
+            images = request.FILES.getlist('uploaded_images')
+            if images:
+                # Delete old images first
+                item.images.all().delete()
+                for img in images:
+                    upload_data = cloudinary.uploader.upload(img)
+                    cloudinary_url = upload_data.get('secure_url')
+                    ItemImage.objects.create(item=item, image=cloudinary_url)
+                    
+            return Response(ItemSerializer(item).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):

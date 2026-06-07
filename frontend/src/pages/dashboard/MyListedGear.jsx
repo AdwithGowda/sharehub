@@ -5,7 +5,7 @@ import { itemService } from '../../services/itemService';
 import { formatINR } from '../../utils/formatCurrency';
 import { getImageUrl } from '../../utils/imageUrl';
 import Loader from '../../components/common/Loader';
-import { Trash2, PlusCircle, AlertCircle, MapPin, Star } from 'lucide-react';
+import { Trash2, PlusCircle, AlertCircle, MapPin, Star, Pencil } from 'lucide-react';
 
 export default function MyListedGear() {
   const { user } = useContext(AuthContext);
@@ -142,6 +142,12 @@ export default function MyListedGear() {
                       className="flex-1 text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold rounded-xl transition duration-200 cursor-pointer"
                     >
                       View Details
+                    </Link>
+                    <Link
+                      to={`/dashboard/edit-item/${item.id}`}
+                      className="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl transition duration-200 cursor-pointer flex items-center justify-center"
+                    >
+                      <Pencil className="w-4.5 h-4.5" />
                     </Link>
                     <button
                       onClick={() => handleDelete(item.id)}
